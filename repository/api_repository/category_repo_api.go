@@ -2,6 +2,7 @@ package apirepository
 
 import (
 	"database/sql"
+	"fmt"
 
 	"github.com/Muhfikri12/project-app-inventaris-golang-fikri/model"
 )
@@ -49,6 +50,43 @@ func (c *CategoryRepoDB) CreateCategory(category *model.Categories) error {
 	
 	if err != nil {
 		return err
+	}
+
+	return nil
+}
+
+func (c *CategoryRepoDB) GetCatgoryByID(id int) (*model.Categories, error) {
+	category := model.Categories{}
+
+	query := `SELECT id, name, description
+		FROM categories 
+		WHERE id=$1 
+		AND deleted_at IS NULL`
+
+	if err := c.DB.QueryRow(query, id).Scan(&category.ID, &category.Name, &category.Description); err != nil {
+		return nil, err
+	}
+	
+	return &category, nil
+}
+
+func (c *CategoryRepoDB) UpdateCategory(id int, category *model.Categories) error {
+	query := `
+		UPDATE categories
+		SET name = $1, description = $2
+		WHERE id = $3 AND deleted_at IS NULL
+	`
+	result, err := c.DB.Exec(query, category.Name, category.Description, id)
+	if err != nil {
+		return fmt.Errorf("error updating category: %w", err)
+	}
+
+	rowsAffected, err := result.RowsAffected()
+	if err != nil {
+		return fmt.Errorf("error checking affected rows: %w", err)
+	}
+	if rowsAffected == 0 {
+		return fmt.Errorf("category not found or no changes made")
 	}
 
 	return nil

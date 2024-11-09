@@ -103,7 +103,7 @@ func (ih *ItemApiHandler) CreateItem(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	validation.OKResponse(w, "Create item successfully", item)
+	validation.CreateResponse(w, "Create item successfully", item)
 }
 
 
@@ -172,7 +172,7 @@ func (ih *ItemApiHandler) ItemByID(w http.ResponseWriter, r *http.Request) {
 
 	item.TotalDaysUsage = totalDaysUsage
 
-	validation.CreateResponse(w, item)
+	validation.OKResponse(w, "Successfully", item)
 }
 
 func (ih *ItemApiHandler) UpdateItem(w http.ResponseWriter, r *http.Request) {
@@ -252,7 +252,7 @@ func (ih *ItemApiHandler) UpdateItem(w http.ResponseWriter, r *http.Request) {
 	totalDaysUsage := int(time.Since(item.TransactionDate).Hours() / 24)
 	item.TotalDaysUsage = totalDaysUsage
 
-	validation.OKResponse(w, "Item successfully updated", item)
+	validation.CreateResponse(w, "Item successfully updated", item)
 }
 
 func (ih *ItemApiHandler) SoftDeleteItemHandler(w http.ResponseWriter, r *http.Request) {

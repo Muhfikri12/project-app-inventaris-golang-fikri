@@ -16,4 +16,6 @@ func ItemsRoute(router *chi.Mux, itemHandler *api.ItemApiHandler) {
 func CategoryRoute(router *chi.Mux, catHandler *api.CategoryHandler) {
 	router.Get("/api/categories", catHandler.Categories)
 	router.Post("/api/category", catHandler.CreateCategory)
+	router.Get("/api/category/{id}", catHandler.CategoryByID)
+	router.Put("/api/category/{id}", catHandler.UpdateCategory)
 }
