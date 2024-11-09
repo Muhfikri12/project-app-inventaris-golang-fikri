@@ -31,3 +31,15 @@ func OKResponse(w http.ResponseWriter, message string , data any)  {
 	json.NewEncoder(w).Encode(response)
 }
 
+func CreateResponse(w http.ResponseWriter , data any)  {
+	response := model.Response {
+		Status: true,
+		StatusCode: http.StatusCreated,
+		Message: "Successfully created",
+		Data: data,
+	}
+
+	w.WriteHeader(response.StatusCode)
+	json.NewEncoder(w).Encode(response)
+}
+

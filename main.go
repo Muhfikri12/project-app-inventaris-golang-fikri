@@ -11,15 +11,17 @@ import (
 
 func main() {
 	app := initializer.InitApp()
+	cat := initializer.InitCategory()
+
 	defer app.DB.Close()
+	defer cat.DB.Close()
 
 	router := chi.NewRouter()
 
 	route.ItemsRoute(router, app.ItemHandler)
-	// route.Items(router, app.ItemHandler)
-	// route.Items(router, app.ItemHandler)
-	
-	log.Println("Server berjalan di port ")
+	route.CategoryRoute(router, cat.Handler)
+
+	log.Println("Server berjalan di port :8000")
 	if err := http.ListenAndServe(":8000", router); err != nil {
 		log.Fatal(err)
 	}

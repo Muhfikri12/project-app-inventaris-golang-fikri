@@ -12,3 +12,8 @@ func ItemsRoute(router *chi.Mux, itemHandler *api.ItemApiHandler) {
 	router.Put("/api/items/{id}", itemHandler.UpdateItem)
 	router.Delete("/api/items/{id}", itemHandler.SoftDeleteItemHandler)
 }
+
+func CategoryRoute(router *chi.Mux, catHandler *api.CategoryHandler) {
+	router.Get("/api/categories", catHandler.Categories)
+	router.Post("/api/category", catHandler.CreateCategory)
+}

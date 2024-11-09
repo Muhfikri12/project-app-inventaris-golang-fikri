@@ -143,6 +143,7 @@ func (ih *ItemApiHandler) Items(w http.ResponseWriter, r *http.Request) {
 		TotalPages: pagination.TotalPages,
 		Data: items,
 	}
+
 	err = json.NewEncoder(w).Encode(response)
 	if err != nil {
 		http.Error(w, err.Error(), http.StatusInternalServerError)
@@ -171,7 +172,7 @@ func (ih *ItemApiHandler) ItemByID(w http.ResponseWriter, r *http.Request) {
 
 	item.TotalDaysUsage = totalDaysUsage
 
-	validation.OKResponse(w, "successfully retrived item", item)
+	validation.CreateResponse(w, item)
 }
 
 func (ih *ItemApiHandler) UpdateItem(w http.ResponseWriter, r *http.Request) {
@@ -261,12 +262,12 @@ func (ih *ItemApiHandler) SoftDeleteItemHandler(w http.ResponseWriter, r *http.R
 		return
 	}
 
-    // Panggil service untuk soft delete
     err = ih.ItemService.SoftDeleteItemService(id)
+
     if err != nil {
-        validation.BadResponse(w, "Failed to delete item: ", http.StatusInternalServerError)
+        validation.BadResponse(w, "Failed to delete item: ", http.StatusNotFound)
         return
     }
 
-    validation.OKResponse(w, "Item successfully soft deleted", nil)
+    validation.OKResponse(w, "Item successfully deleted", nil)
 }
