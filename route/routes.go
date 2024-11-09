@@ -10,4 +10,5 @@ func ItemsRoute(router *chi.Mux, itemHandler *api.ItemApiHandler) {
 	router.Get("/api/items", itemHandler.Items)
 	router.Get("/api/items/{id}", itemHandler.ItemByID)
 	router.Put("/api/items/{id}", itemHandler.UpdateItem)
+	router.Delete("/api/items/{id}", itemHandler.SoftDeleteItemHandler)
 }

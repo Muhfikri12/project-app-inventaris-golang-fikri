@@ -53,3 +53,11 @@ func (is *ItemService) UpdateItemID(id int, item *model.Items) error {
 	return nil
 }
 
+func (is *ItemService) SoftDeleteItemService(id int) error {
+
+    if err := is.ItemRepo.SoftDeleteItem(id); err != nil {
+        return fmt.Errorf("failed to delete item: %w", err)
+    }
+
+    return nil
+}

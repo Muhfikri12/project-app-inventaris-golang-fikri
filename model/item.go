@@ -12,4 +12,5 @@ type Items struct {
 	TransactionDate time.Time `json:"transaction_date"`
 	Deprisiasi int `json:"deprisiasi,omitempty"`
 	TotalDaysUsage int `json:"total_days_usage,omitempty"`
+	DeletedAt       *time.Time `json:"deleted_at,omitempty"`
 }

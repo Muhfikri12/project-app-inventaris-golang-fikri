@@ -28,7 +28,7 @@ func NewItemHandler(serve *apiservice.ItemService) *ItemApiHandler {
 
 func (ih *ItemApiHandler) CreateItem(w http.ResponseWriter, r *http.Request) {
 	if err := r.ParseMultipartForm(10 << 20); err != nil {
-		validation.RequiredValidate(w, "Failed to parse form data: "+err.Error())
+		validation.RequiredValidate(w, "Failed to parse form data: ")
 		return
 	}
 
@@ -73,14 +73,14 @@ func (ih *ItemApiHandler) CreateItem(w http.ResponseWriter, r *http.Request) {
 
 		dst, err := os.Create(imagePath)
 		if err != nil {
-			validation.BadResponse(w, "Failed to save image: "+err.Error(), http.StatusInternalServerError)
+			validation.BadResponse(w, "Failed to save image: ", http.StatusInternalServerError)
 			return
 		}
 		defer dst.Close()
 
 		_, err = io.Copy(dst, file)
 		if err != nil {
-			validation.BadResponse(w, "Failed to copy image: "+err.Error(), http.StatusInternalServerError)
+			validation.BadResponse(w, "Failed to copy image: ", http.StatusInternalServerError)
 			return
 		}
 	}
@@ -94,11 +94,12 @@ func (ih *ItemApiHandler) CreateItem(w http.ResponseWriter, r *http.Request) {
 		Price:           price,
 		TransactionDate: transactionDate,
 		TotalDaysUsage:  totalDaysUsage,
+		Deprisiasi: 10,
 	}
 
 	err = ih.ItemService.CreateItemService(item)
 	if err != nil {
-		validation.RequiredValidate(w, "Failed to create item: "+err.Error())
+		validation.RequiredValidate(w, "Failed to create item: ")
 		return
 	}
 
@@ -155,14 +156,14 @@ func (ih *ItemApiHandler) ItemByID(w http.ResponseWriter, r *http.Request) {
 
 
 	if err != nil {
-		validation.BadResponse(w, "Invalid Input " + err.Error(), http.StatusBadRequest)
+		validation.BadResponse(w, "Invalid Input ", http.StatusBadRequest)
 		return
 	}
 
 	item, err := ih.ItemService.GetItemByID(id)
 	
 	if err != nil {
-		validation.BadResponse(w, "item not found" + err.Error(), http.StatusNotFound)
+		validation.BadResponse(w, "item not found", http.StatusNotFound)
 		return
 	}
 
@@ -176,13 +177,13 @@ func (ih *ItemApiHandler) ItemByID(w http.ResponseWriter, r *http.Request) {
 func (ih *ItemApiHandler) UpdateItem(w http.ResponseWriter, r *http.Request) {
 	id, err := strconv.Atoi(chi.URLParam(r, "id"))
 	if err != nil {
-		validation.BadResponse(w, "Invalid Input: "+err.Error(), http.StatusBadRequest)
+		validation.BadResponse(w, "Invalid Input: ", http.StatusBadRequest)
 		return
 	}
 
 	err = r.ParseMultipartForm(10 << 20)
 	if err != nil {
-		validation.BadResponse(w, "Error parsing form-data: "+err.Error(), http.StatusBadRequest)
+		validation.BadResponse(w, "Error parsing form-data: ", http.StatusBadRequest)
 		return
 	}
 
@@ -198,19 +199,19 @@ func (ih *ItemApiHandler) UpdateItem(w http.ResponseWriter, r *http.Request) {
 
 	categoryId, err := strconv.Atoi(categoryIdStr)
 	if err != nil {
-		validation.BadResponse(w, "Invalid category_id: "+err.Error(), http.StatusBadRequest)
+		validation.BadResponse(w, "Invalid category_id: ", http.StatusBadRequest)
 		return
 	}
 
 	price, err := strconv.Atoi(priceStr)
 	if err != nil {
-		validation.BadResponse(w, "Invalid price: "+err.Error(), http.StatusBadRequest)
+		validation.BadResponse(w, "Invalid price: ", http.StatusBadRequest)
 		return
 	}
 
 	transactionDate, err := time.Parse("2006-01-02", transactionDateStr)
 	if err != nil {
-		validation.BadResponse(w, "Invalid transaction_date format: "+err.Error(), http.StatusBadRequest)
+		validation.BadResponse(w, "Invalid transaction_date format: ", http.StatusBadRequest)
 		return
 	}
 
@@ -221,13 +222,13 @@ func (ih *ItemApiHandler) UpdateItem(w http.ResponseWriter, r *http.Request) {
 		imagePath = "uploads/" + handler.Filename
 		dst, err := os.Create(imagePath)
 		if err != nil {
-			validation.BadResponse(w, "Failed to save image: "+err.Error(), http.StatusInternalServerError)
+			validation.BadResponse(w, "Failed to save image: ", http.StatusInternalServerError)
 			return
 		}
 		defer dst.Close()
 		_, err = io.Copy(dst, file)
 		if err != nil {
-			validation.BadResponse(w, "Failed to copy image: "+err.Error(), http.StatusInternalServerError)
+			validation.BadResponse(w, "Failed to copy image: ", http.StatusInternalServerError)
 			return
 		}
 	}
@@ -253,4 +254,19 @@ func (ih *ItemApiHandler) UpdateItem(w http.ResponseWriter, r *http.Request) {
 	validation.OKResponse(w, "Item successfully updated", item)
 }
 
+func (ih *ItemApiHandler) SoftDeleteItemHandler(w http.ResponseWriter, r *http.Request) {
+    id, err := strconv.Atoi(chi.URLParam(r, "id"))
+	if err != nil {
+		validation.BadResponse(w, "Invalid Item: ", http.StatusBadRequest)
+		return
+	}
 
+    // Panggil service untuk soft delete
+    err = ih.ItemService.SoftDeleteItemService(id)
+    if err != nil {
+        validation.BadResponse(w, "Failed to delete item: ", http.StatusInternalServerError)
+        return
+    }
+
+    validation.OKResponse(w, "Item successfully soft deleted", nil)
+}
