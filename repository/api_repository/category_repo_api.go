@@ -2,7 +2,9 @@ package apirepository
 
 import (
 	"database/sql"
+	"errors"
 	"fmt"
+	"time"
 
 	"github.com/Muhfikri12/project-app-inventaris-golang-fikri/model"
 )
@@ -90,4 +92,23 @@ func (c *CategoryRepoDB) UpdateCategory(id int, category *model.Categories) erro
 	}
 
 	return nil
+}
+
+func (c *CategoryRepoDB) SoftDeleteCat(id int) error {
+    query := `UPDATE categories SET deleted_at = $1 WHERE id = $2 AND deleted_at IS NULL`
+    result, err := c.DB.Exec(query, time.Now(), id)
+    if err != nil {
+        return err
+    }
+
+    rowsAffected, err := result.RowsAffected()
+    if err != nil {
+        return err
+    }
+
+    if rowsAffected == 0 {
+        return errors.New("category not found or already deleted")
+    }
+
+    return nil
 }

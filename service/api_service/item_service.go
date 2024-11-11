@@ -30,7 +30,7 @@ func (is *ItemService) ShowAllItems(page, limit int, pagination *model.Response)
 	if err != nil {
 		return nil, err
 	}
-	
+
 	return item, nil
 }
 
@@ -45,6 +45,7 @@ func (is *ItemService) GetItemByID(id int) (*model.Items, error) {
 }
 
 func (is *ItemService) UpdateItemID(id int, item *model.Items) error {
+	
 	err := is.ItemRepo.UpdateItemID(id, item)
 	if err != nil {
 		return fmt.Errorf("failed to update item: %w", err)

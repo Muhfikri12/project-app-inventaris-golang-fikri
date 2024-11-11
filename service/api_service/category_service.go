@@ -53,3 +53,12 @@ func (sc *ServiceCategory) UpdateCategory(id int, category *model.Categories) er
 
 	return nil
 }
+
+func (sc *ServiceCategory) SoftDeleteCatService(id int) error {
+
+    if err := sc.RepoService.SoftDeleteCat(id); err != nil {
+        return fmt.Errorf("failed to delete category: %w", err)
+    }
+
+    return nil
+}

@@ -94,7 +94,7 @@ func (ih *ItemApiHandler) CreateItem(w http.ResponseWriter, r *http.Request) {
 		Price:           price,
 		TransactionDate: transactionDate,
 		TotalDaysUsage:  totalDaysUsage,
-		Deprisiasi: 10,
+		Depreciation: 10,
 	}
 
 	err = ih.ItemService.CreateItemService(item)
@@ -126,7 +126,7 @@ func (ih *ItemApiHandler) Items(w http.ResponseWriter, r *http.Request) {
 
 	items, err := ih.ItemService.ShowAllItems(page, limit, pagination)
 	if len(*items) <= 0 {
-		validation.RequiredValidate(w, "items not found")
+		validation.BadResponse(w, "items not found" + err.Error(), http.StatusNotFound)
 		return
 	}
 

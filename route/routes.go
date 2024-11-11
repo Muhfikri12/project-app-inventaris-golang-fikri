@@ -18,4 +18,9 @@ func CategoryRoute(router *chi.Mux, catHandler *api.CategoryHandler) {
 	router.Post("/api/category", catHandler.CreateCategory)
 	router.Get("/api/category/{id}", catHandler.CategoryByID)
 	router.Put("/api/category/{id}", catHandler.UpdateCategory)
+	router.Delete("/api/category/{id}", catHandler.SoftDeleteCatHandler)
+}
+
+func InvestmentRoute(router *chi.Mux, investment *api.InvestmentHandler) {
+	router.Get("/api/investment", investment.GetInvestmentData)
 }

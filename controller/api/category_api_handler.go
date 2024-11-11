@@ -96,10 +96,26 @@ func (ch *CategoryHandler) UpdateCategory(w http.ResponseWriter, r *http.Request
 	}
 
 	if err := ch.CategoryService.UpdateCategory(id, &category); err != nil {
-		validation.BadResponse(w, err.Error(), http.StatusInternalServerError)
+		validation.BadResponse(w, err.Error(), http.StatusNotFound)
 		return
 	}
 
 	validation.OKResponse(w, "Category successfully updated", category)
 }
 
+func (ch *CategoryHandler) SoftDeleteCatHandler(w http.ResponseWriter, r *http.Request) {
+    id, err := strconv.Atoi(chi.URLParam(r, "id"))
+	if err != nil {
+		validation.BadResponse(w, "Invalid Category: ", http.StatusBadRequest)
+		return
+	}
+
+    err = ch.CategoryService.SoftDeleteCatService(id)
+
+    if err != nil {
+        validation.BadResponse(w, err.Error(), http.StatusNotFound)
+        return
+    }
+
+    validation.OKResponse(w, "Item successfully deleted", nil)
+}

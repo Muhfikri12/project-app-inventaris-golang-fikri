@@ -19,7 +19,7 @@ func NewItemRepo(db *sql.DB) ItemRepoDB {
 
 func (i *ItemRepoDB) CreateItem(item *model.Items) error {
 	query := `INSERT INTO items(name, category_id, image, price, transaction_date, deprisiasi) VALUES($1, $2, $3, $4, $5, $6) RETURNING id`
-	err := i.DB.QueryRow(query, item.Name, item.CategoryId, item.Image, item.Price, item.TransactionDate, item.Deprisiasi).Scan(&item.ID)
+	err := i.DB.QueryRow(query, item.Name, item.CategoryId, item.Image, item.Price, item.TransactionDate, item.Depreciation).Scan(&item.ID)
 	
 	if err != nil {
 		return err
@@ -57,7 +57,7 @@ func (i *ItemRepoDB) ShowItems(page, limit int, pagination *model.Response) (*[]
 	for rows.Next() {
 		var item model.Items
 		// var category string
-		err := rows.Scan(&item.ID, &item.Name, &item.CategoryName, &item.Image, &item.Price, &item.TransactionDate, &item.Deprisiasi)
+		err := rows.Scan(&item.ID, &item.Name, &item.CategoryName, &item.Image, &item.Price, &item.TransactionDate, &item.Depreciation)
 		if err != nil {
 			return nil, err
 		}
@@ -134,3 +134,4 @@ func (i *ItemRepoDB) SoftDeleteItem(id int) error {
 
     return nil
 }
+
