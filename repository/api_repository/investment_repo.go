@@ -39,3 +39,15 @@ func (i *InvestmentRepoDB) CalculateDepresiation() (*[]model.Items, error) {
 
 	return &items, err
 }
+
+func (i *InvestmentRepoDB) GetItemWithDepreciation(id int) (*model.Items, error) {
+	item := model.Items{}
+	query := `SELECT id, name, price, deprisiasi, transaction_date FROM items WHERE id=$1 AND deleted_at IS NULL`
+
+	err := i.db.QueryRow(query, id).Scan(&item.ID, &item.Name, &item.Price, &item.Depreciation, &item.TransactionDate)
+	if err != nil {
+		return nil, err
+	}
+	
+	return &item, nil
+}

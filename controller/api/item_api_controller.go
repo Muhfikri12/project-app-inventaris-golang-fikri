@@ -93,7 +93,7 @@ func (ih *ItemApiHandler) CreateItem(w http.ResponseWriter, r *http.Request) {
 		Image:           imagePath,
 		Price:           price,
 		TransactionDate: transactionDate,
-		TotalDaysUsage:  totalDaysUsage,
+		TotalUsage:  totalDaysUsage,
 		Depreciation: 10,
 	}
 
@@ -170,7 +170,7 @@ func (ih *ItemApiHandler) ItemByID(w http.ResponseWriter, r *http.Request) {
 
 	totalDaysUsage := int(time.Since(item.TransactionDate).Hours() / 24) 
 
-	item.TotalDaysUsage = totalDaysUsage
+	item.TotalUsage = totalDaysUsage
 
 	validation.OKResponse(w, "Successfully", item)
 }
@@ -250,7 +250,7 @@ func (ih *ItemApiHandler) UpdateItem(w http.ResponseWriter, r *http.Request) {
 	}
 
 	totalDaysUsage := int(time.Since(item.TransactionDate).Hours() / 24)
-	item.TotalDaysUsage = totalDaysUsage
+	item.TotalUsage = totalDaysUsage
 
 	validation.CreateResponse(w, "Item successfully updated", item)
 }

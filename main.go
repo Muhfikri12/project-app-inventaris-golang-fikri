@@ -10,20 +10,27 @@ import (
 )
 
 func main() {
+	// Inisialisasi semua handler
 	app := initializer.InitApp()
 	cat := initializer.InitCategory()
 	inv := initializer.InitInvestment()
+	auth := initializer.InitAuth()
 
-	defer app.DB.Close()
-	defer cat.DB.Close()
-	defer inv.DB.Close()
+	// Tutup koneksi database saat aplikasi dihentikan
+	defer func() {
+		app.DB.Close()
+		cat.DB.Close()
+		inv.DB.Close()
+		auth.DB.Close()
+	}()
 
+	// Buat router baru
 	router := chi.NewRouter()
 
-	route.ItemsRoute(router, app.ItemHandler)
-	route.CategoryRoute(router, cat.Handler)
-	route.InvestmentRoute(router, inv.Handler)
+	// Registrasi semua route
+	route.RegisterRoutes(router, app.ItemHandler, cat.Handler, inv.Handler, auth.Handler)
 
+	// Jalankan server
 	log.Println("Server berjalan di port :8000")
 	if err := http.ListenAndServe(":8000", router); err != nil {
 		log.Fatal(err)

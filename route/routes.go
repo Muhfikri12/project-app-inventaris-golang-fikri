@@ -5,22 +5,26 @@ import (
 	"github.com/go-chi/chi/v5"
 )
 
-func ItemsRoute(router *chi.Mux, itemHandler *api.ItemApiHandler) {
-	router.Post("/api/items", itemHandler.CreateItem)
-	router.Get("/api/items", itemHandler.Items)
-	router.Get("/api/items/{id}", itemHandler.ItemByID)
-	router.Put("/api/items/{id}", itemHandler.UpdateItem)
-	router.Delete("/api/items/{id}", itemHandler.SoftDeleteItemHandler)
-}
+func RegisterRoutes(router *chi.Mux, itemHandler *api.ItemApiHandler, catHandler *api.CategoryHandler, investment *api.InvestmentHandler, auth *api.AuthHandler) {
+	router.Post("/login", auth.LoginHandler)
 
-func CategoryRoute(router *chi.Mux, catHandler *api.CategoryHandler) {
-	router.Get("/api/categories", catHandler.Categories)
-	router.Post("/api/category", catHandler.CreateCategory)
-	router.Get("/api/category/{id}", catHandler.CategoryByID)
-	router.Put("/api/category/{id}", catHandler.UpdateCategory)
-	router.Delete("/api/category/{id}", catHandler.SoftDeleteCatHandler)
-}
+	router.Route("/api", func(r chi.Router) {
+		r.Use(auth.Middleware)
 
-func InvestmentRoute(router *chi.Mux, investment *api.InvestmentHandler) {
-	router.Get("/api/investment", investment.GetInvestmentData)
+		r.Post("/items", itemHandler.CreateItem)
+		r.Get("/items", itemHandler.Items)
+		r.Get("/items/{id}", itemHandler.ItemByID)
+		r.Put("/items/{id}", itemHandler.UpdateItem)
+		r.Delete("/items/{id}", itemHandler.SoftDeleteItemHandler)
+
+		r.Get("/categories", catHandler.Categories)
+		r.Post("/category", catHandler.CreateCategory)
+		r.Get("/category/{id}", catHandler.CategoryByID)
+		r.Put("/category/{id}", catHandler.UpdateCategory)
+		r.Delete("/category/{id}", catHandler.SoftDeleteCatHandler)
+
+		r.Get("/investment", investment.GetInvestmentData)
+		r.Get("/investment/{id}", investment.GetItemWithDepreciationID)
+		r.Get("/investment/replaced", investment.GetReplacedItem)
+	})
 }
