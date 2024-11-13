@@ -1,0 +1,487 @@
+{
+    "info": {
+        "_postman_id": "e99f236d-fdf3-4699-a717-2786d0ec5155",
+        "name": "Mini Project RestApi",
+        "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+        "_exporter_id": "36321276"
+    },
+    "item": [{
+            "name": "add-item",
+            "request": {
+                "method": "POST",
+                "header": [],
+                "body": {
+                    "mode": "formdata",
+                    "formdata": [{
+                            "key": "name",
+                            "value": "Book",
+                            "type": "text"
+                        },
+                        {
+                            "key": "category_id",
+                            "value": "1",
+                            "type": "text"
+                        },
+                        {
+                            "key": "image",
+                            "type": "file",
+                            "src": "/home/fikri/Downloads/mini-project-inventory.png"
+                        },
+                        {
+                            "key": "price",
+                            "value": "1000",
+                            "type": "text"
+                        },
+                        {
+                            "key": "transaction_date",
+                            "value": "2024-11-01",
+                            "type": "text"
+                        }
+                    ]
+                },
+                "url": {
+                    "raw": "http://localhost:8000/api/items",
+                    "protocol": "http",
+                    "host": [
+                        "localhost"
+                    ],
+                    "port": "8000",
+                    "path": [
+                        "api",
+                        "items"
+                    ]
+                }
+            },
+            "response": []
+        },
+        {
+            "name": "UpdateItem",
+            "request": {
+                "method": "PUT",
+                "header": [],
+                "body": {
+                    "mode": "formdata",
+                    "formdata": [{
+                            "key": "name",
+                            "value": "Kulkas dua pintu",
+                            "type": "text"
+                        },
+                        {
+                            "key": "category_id",
+                            "value": "3",
+                            "type": "text"
+                        },
+                        {
+                            "key": "image",
+                            "type": "file",
+                            "src": "/home/fikri/Downloads/about.png"
+                        },
+                        {
+                            "key": "price",
+                            "value": "10000",
+                            "type": "text"
+                        },
+                        {
+                            "key": "transaction_date",
+                            "value": "2024-02-12",
+                            "type": "text"
+                        }
+                    ]
+                },
+                "url": {
+                    "raw": "http://localhost:8000/api/items/50",
+                    "protocol": "http",
+                    "host": [
+                        "localhost"
+                    ],
+                    "port": "8000",
+                    "path": [
+                        "api",
+                        "items",
+                        "50"
+                    ],
+                    "query": [{
+                        "key": "Name",
+                        "value": null,
+                        "disabled": true
+                    }]
+                }
+            },
+            "response": []
+        },
+        {
+            "name": "show all items",
+            "protocolProfileBehavior": {
+                "disableBodyPruning": true
+            },
+            "request": {
+                "method": "GET",
+                "header": [{
+                    "key": "Authorization",
+                    "value": "303b655f-537d-44e4-8059-19ec08cbc454",
+                    "type": "text"
+                }],
+                "body": {
+                    "mode": "raw",
+                    "raw": "",
+                    "options": {
+                        "raw": {
+                            "language": "json"
+                        }
+                    }
+                },
+                "url": {
+                    "raw": "http://localhost:8000/api/items",
+                    "protocol": "http",
+                    "host": [
+                        "localhost"
+                    ],
+                    "port": "8000",
+                    "path": [
+                        "api",
+                        "items"
+                    ]
+                }
+            },
+            "response": []
+        },
+        {
+            "name": "showItemByID",
+            "protocolProfileBehavior": {
+                "disableBodyPruning": true
+            },
+            "request": {
+                "method": "GET",
+                "header": [],
+                "body": {
+                    "mode": "raw",
+                    "raw": "",
+                    "options": {
+                        "raw": {
+                            "language": "json"
+                        }
+                    }
+                },
+                "url": {
+                    "raw": "http://localhost:8000/api/items/8",
+                    "protocol": "http",
+                    "host": [
+                        "localhost"
+                    ],
+                    "port": "8000",
+                    "path": [
+                        "api",
+                        "items",
+                        "8"
+                    ]
+                }
+            },
+            "response": []
+        },
+        {
+            "name": "SoftDeletesItem",
+            "request": {
+                "method": "DELETE",
+                "header": [],
+                "body": {
+                    "mode": "raw",
+                    "raw": "",
+                    "options": {
+                        "raw": {
+                            "language": "json"
+                        }
+                    }
+                },
+                "url": {
+                    "raw": "http://localhost:8000/api/items/1",
+                    "protocol": "http",
+                    "host": [
+                        "localhost"
+                    ],
+                    "port": "8000",
+                    "path": [
+                        "api",
+                        "items",
+                        "1"
+                    ]
+                }
+            },
+            "response": []
+        },
+        {
+            "name": "showAllCategories",
+            "protocolProfileBehavior": {
+                "disableBodyPruning": true
+            },
+            "request": {
+                "method": "GET",
+                "header": [],
+                "body": {
+                    "mode": "raw",
+                    "raw": "",
+                    "options": {
+                        "raw": {
+                            "language": "json"
+                        }
+                    }
+                },
+                "url": {
+                    "raw": "http://localhost:8000/api/categories",
+                    "protocol": "http",
+                    "host": [
+                        "localhost"
+                    ],
+                    "port": "8000",
+                    "path": [
+                        "api",
+                        "categories"
+                    ]
+                }
+            },
+            "response": []
+        },
+        {
+            "name": "CreateCategories",
+            "request": {
+                "method": "POST",
+                "header": [],
+                "body": {
+                    "mode": "raw",
+                    "raw": "{\n    \"name\": \"Beauty\",\n    \"description\": \"for making beautiful\"\n}"
+                },
+                "url": {
+                    "raw": "http://localhost:8000/api/category",
+                    "protocol": "http",
+                    "host": [
+                        "localhost"
+                    ],
+                    "port": "8000",
+                    "path": [
+                        "api",
+                        "category"
+                    ]
+                }
+            },
+            "response": []
+        },
+        {
+            "name": "showCategoryByID",
+            "protocolProfileBehavior": {
+                "disableBodyPruning": true
+            },
+            "request": {
+                "method": "GET",
+                "header": [],
+                "body": {
+                    "mode": "raw",
+                    "raw": "",
+                    "options": {
+                        "raw": {
+                            "language": "json"
+                        }
+                    }
+                },
+                "url": {
+                    "raw": "http://localhost:8000/api/category/8",
+                    "protocol": "http",
+                    "host": [
+                        "localhost"
+                    ],
+                    "port": "8000",
+                    "path": [
+                        "api",
+                        "category",
+                        "8"
+                    ]
+                }
+            },
+            "response": []
+        },
+        {
+            "name": "UpdateCategoryByID",
+            "request": {
+                "method": "PUT",
+                "header": [],
+                "body": {
+                    "mode": "raw",
+                    "raw": "{\n    \"name\": \"Beauty\",\n    \"description\": \"for making beautiful\"\n}",
+                    "options": {
+                        "raw": {
+                            "language": "json"
+                        }
+                    }
+                },
+                "url": {
+                    "raw": "http://localhost:8000/api/category/9",
+                    "protocol": "http",
+                    "host": [
+                        "localhost"
+                    ],
+                    "port": "8000",
+                    "path": [
+                        "api",
+                        "category",
+                        "9"
+                    ]
+                }
+            },
+            "response": []
+        },
+        {
+            "name": "SoftDeletesCat",
+            "request": {
+                "method": "DELETE",
+                "header": [],
+                "body": {
+                    "mode": "raw",
+                    "raw": "",
+                    "options": {
+                        "raw": {
+                            "language": "json"
+                        }
+                    }
+                },
+                "url": {
+                    "raw": "http://localhost:8000/api/category/6",
+                    "protocol": "http",
+                    "host": [
+                        "localhost"
+                    ],
+                    "port": "8000",
+                    "path": [
+                        "api",
+                        "category",
+                        "6"
+                    ]
+                }
+            },
+            "response": []
+        },
+        {
+            "name": "showInvestment",
+            "protocolProfileBehavior": {
+                "disableBodyPruning": true
+            },
+            "request": {
+                "method": "GET",
+                "header": [],
+                "body": {
+                    "mode": "raw",
+                    "raw": "",
+                    "options": {
+                        "raw": {
+                            "language": "json"
+                        }
+                    }
+                },
+                "url": {
+                    "raw": "http://localhost:8000/api/investment",
+                    "protocol": "http",
+                    "host": [
+                        "localhost"
+                    ],
+                    "port": "8000",
+                    "path": [
+                        "api",
+                        "investment"
+                    ]
+                }
+            },
+            "response": []
+        },
+        {
+            "name": "showInvestmentByID",
+            "protocolProfileBehavior": {
+                "disableBodyPruning": true
+            },
+            "request": {
+                "method": "GET",
+                "header": [],
+                "body": {
+                    "mode": "raw",
+                    "raw": "",
+                    "options": {
+                        "raw": {
+                            "language": "json"
+                        }
+                    }
+                },
+                "url": {
+                    "raw": "http://localhost:8000/api/investment/4",
+                    "protocol": "http",
+                    "host": [
+                        "localhost"
+                    ],
+                    "port": "8000",
+                    "path": [
+                        "api",
+                        "investment",
+                        "4"
+                    ]
+                }
+            },
+            "response": []
+        },
+        {
+            "name": "showReplacedItem",
+            "protocolProfileBehavior": {
+                "disableBodyPruning": true
+            },
+            "request": {
+                "method": "GET",
+                "header": [],
+                "body": {
+                    "mode": "raw",
+                    "raw": "",
+                    "options": {
+                        "raw": {
+                            "language": "json"
+                        }
+                    }
+                },
+                "url": {
+                    "raw": "http://localhost:8000/api/investment/replaced",
+                    "protocol": "http",
+                    "host": [
+                        "localhost"
+                    ],
+                    "port": "8000",
+                    "path": [
+                        "api",
+                        "investment",
+                        "replaced"
+                    ]
+                }
+            },
+            "response": []
+        },
+        {
+            "name": "LoginUser",
+            "request": {
+                "method": "POST",
+                "header": [],
+                "body": {
+                    "mode": "raw",
+                    "raw": "{\n    \"email\": \"fikri1@example.com\",\n    \"password\": \"fikri1234\"\n}",
+                    "options": {
+                        "raw": {
+                            "language": "json"
+                        }
+                    }
+                },
+                "url": {
+                    "raw": "http://localhost:8000/login",
+                    "protocol": "http",
+                    "host": [
+                        "localhost"
+                    ],
+                    "port": "8000",
+                    "path": [
+                        "login"
+                    ]
+                }
+            },
+            "response": []
+        }
+    ]
+}
